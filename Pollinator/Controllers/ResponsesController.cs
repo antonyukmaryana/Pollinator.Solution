@@ -29,35 +29,24 @@ namespace Pollinator.Controllers
             return View (_db.Quizzes.Where(x => x.User.Id == currentUser.Id).ToList());
         }
 
-        // public  ActionResult Create(int id)
-        // {
-        //     return View();
-        // }
-
         [HttpPost]
         public async Task<ActionResult> Create(Response response)
         {
-            Console.WriteLine("hitting create response method");
             var currentUser = await GetApplicationUser();
             response.User = currentUser;
+            Console.WriteLine($"AnswerA Count = {response.AnswerChoice}, {response.ResponseId}");
+            Console.WriteLine($"AnswerB Count = {response.AnswerChoice}");
             _db.Responses.Add(response);
             _db.SaveChanges();
             return RedirectToAction("Index", "Quizzes");
         }
 
-        // public ActionResult Details(int id)
-        // {
-        //     var thisQuiz = _db.Quizzes
-        //         .Include(quiz => quiz.QuestionText)
-        //         .ThenInclude(quiz =>)
-        //         .FirstOrDefault(quiz => quiz.QuizId == id);
-        //     return View(thisQuiz);
-        // }
         public ActionResult Edit(int id)
         {
             var thisQuiz = _db.Quizzes.FirstOrDefault(quiz => quiz.QuizId == id);
             return View(thisQuiz);
         }
+
         [HttpPost]
         public ActionResult Edit(Quiz quiz)
         {

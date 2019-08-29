@@ -3,13 +3,13 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Active Poll</h1>
+    <h1 class="display-4">Active Polls</h1>
 </div>
 
 @using Pollinator.Models
 @model dynamic
-
-<div class="container">
+<div class="row">
+<div class="col-4">
 @foreach (Quiz quiz in Model.Quizzes)
 {
     @using (Html.BeginForm("Create", "Responses", FormMethod.Post))
@@ -29,7 +29,17 @@
     </div>
     </div>
     }
+    <div class="col-8">
+        <div class="card border-info mb-3" style="max-width: 18rem;">
+        <div class="card-header">@quiz.QuestionText Results</div>
+        <div class="card-body text-info">
+
+        </div>
+        </div>
+    </div>  
 }
+
+</div>
  
 
 
