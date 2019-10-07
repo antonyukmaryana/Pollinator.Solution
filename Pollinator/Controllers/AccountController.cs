@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
@@ -6,6 +7,8 @@ using Pollinator.ViewModels;
 
 namespace Pollinator.Controllers
 {
+    [Route("api/account")]
+    [ApiController]
     public class AccountController : Controller
     {
         private readonly PollinatorContext _db;
@@ -25,18 +28,18 @@ namespace Pollinator.Controllers
             return View();
         }
 
-        [HttpPost]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        [HttpPost("register")]
+        public async Task<ActionResult<String>> Register(RegisterViewModel model)
         {
             var user = new ApplicationUser {UserName = model.Email};
             IdentityResult result = await _userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
-                return RedirectToAction("Login");
+                return "Success";
             }
             else
             {
-                return View();
+                return "Failure";
             }
         }
 
