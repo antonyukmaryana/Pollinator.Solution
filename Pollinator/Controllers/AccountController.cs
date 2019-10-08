@@ -48,18 +48,18 @@ namespace Pollinator.Controllers
             return View();
         }
 
-        [HttpPost]
-        public async Task<ActionResult> Login(LoginViewModel model)
+        [HttpPost("login")]
+        public async Task<ActionResult<String>> Login(LoginViewModel model)
         {
             Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(model.Email,
                 model.Password, isPersistent: true, lockoutOnFailure: false);
             if (result.Succeeded)
             {
-                return RedirectToAction("Index", "Account");
+                return "Success";
             }
             else
             {
-                return View();
+                return "Failure";
             }
         }
 
