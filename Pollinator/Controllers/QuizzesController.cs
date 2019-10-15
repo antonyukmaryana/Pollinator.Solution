@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,9 @@ using Pollinator.Models;
 
 namespace Pollinator.Controllers
 {
-    [Authorize]
+//    [Authorize]
+    [Route("api/quiz")]
+    [ApiController]
     public class QuizzesController : Controller
     {
         private readonly PollinatorContext _db;
@@ -39,14 +42,14 @@ namespace Pollinator.Controllers
             return View();
         }
 
-        [HttpPost]
-        public async Task<ActionResult> Create(Quiz quiz)
+        [HttpPost("create")]
+        public async Task<ActionResult<String>> Create(Quiz quiz)
         {
             var currentUser = await GetApplicationUser();
             quiz.User = currentUser;
             _db.Quizzes.Add(quiz);
             _db.SaveChanges();
-            return RedirectToAction("Index");
+            return "Success";
         }
 
         // public ActionResult Details(int id)
